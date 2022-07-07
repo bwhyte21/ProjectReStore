@@ -6,7 +6,7 @@ namespace API.Extensions;
 
 public static class ApplicationMiddlewareExtension
 {
-    public static IApplicationBuilder AddApplicationMiddleware(this IApplicationBuilder app, IWebHostEnvironment env)
+    public static IApplicationBuilder AddApplicationMiddleware(this IApplicationBuilder app, IWebHostEnvironment env, string corsPolicy)
     {
         if (env.IsDevelopment())
         {
@@ -18,6 +18,9 @@ public static class ApplicationMiddlewareExtension
         app.UseHttpsRedirection();
 
         app.UseRouting();
+
+        // CORS for api calls.
+        app.UseCors(corsPolicy);
 
         app.UseAuthorization();
 

@@ -13,6 +13,8 @@ public class Startup
     /// </summary>
     private readonly IConfiguration _configuration;
 
+    private const string CorsPolicy = "CorsPolicy";
+
     /// <summary>
     /// Startup Ctor.
     /// </summary>
@@ -37,7 +39,7 @@ public class Startup
 
         #region Application Services
 
-        services.AddApplicationServices(_configuration);
+        services.AddApplicationServices(_configuration, CorsPolicy);
 
         #endregion
     }
@@ -49,6 +51,6 @@ public class Startup
     /// <param name="env"></param>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        app.AddApplicationMiddleware(env);
+        app.AddApplicationMiddleware(env, CorsPolicy);
     }
 }

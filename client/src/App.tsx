@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 function App() {
   // We need to store what is inside this component to store this data in memory, using states.
+  // This const is temporary.
   const [products, setProducts] = useState([
     { name: 'product1', price: 100.0 },
     { name: 'product2', price: 200.0 },
@@ -11,7 +12,7 @@ function App() {
   useEffect(() => {
     fetch('https://localhost:5001/api/Products')
       .then((response) => response.json()) // the fetch will give us a json response.
-      .then((data) => setProducts(data)); // then we get data from said response.
+      .then((data) => setProducts(data)) // then we get data from said response.
   }, []); // [] = empty dependency makes this useEffect get called only once. Remember this!
 
   // Add a new product to the list.
@@ -19,7 +20,7 @@ function App() {
   function addProduct() {
     setProducts((prevState) => [
       ...prevState,
-      { name: 'product' + (prevState.length + 1), price: prevState.length * 100 + 100 },
+      { name: 'product' + (prevState.length + 1), price: prevState.length * 100 + 100 }
     ]);
   }
 

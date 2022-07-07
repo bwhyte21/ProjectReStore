@@ -11,7 +11,7 @@ namespace API.Extensions;
 /// </summary>
 public static class ApplicationServicesExtension
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration, string corsPolicy)
     {
         #region Swagger
 
@@ -29,6 +29,19 @@ public static class ApplicationServicesExtension
         #region DBContext
 
         services.AddDbContext<StoreContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+        #endregion
+
+        #region CORS Policy
+
+        // Allow only the client app to access this API for sending/receiving requests/responses.
+        services.AddCors(options =>
+        {
+            options.AddPolicy(name: corsPolicy, policy =>
+            {
+                policy.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+            });
+        });
 
         #endregion
 
